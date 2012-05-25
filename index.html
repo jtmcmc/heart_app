@@ -1,0 +1,53 @@
+<html>
+<title>Hey do you have heart cancer?</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="/json2.js"></script>
+<body>
+	<form id='patient'>
+	age <input type='text' name='age'/><br />
+	sex <input type='text' name='sex'/><br />
+	cp <input type='text' name='cp'/><br />
+	trestbps <input type='text' name='trestbps'/><br />
+	chol <input type='text' name='chol'/><br />
+	fbs <input type='text' name='fbs'/><br />
+	restecg <input type='text' name='restecg'/><br />
+	thalach <input type='text' name='thalach'/><br />
+	exang <input type='text' name='exang'/><br />
+	oldspeak <input type='text' name='oldspeak'/><br />
+	slope <input type='text' name='slope'/><br />
+	ca <input type='text' name='ca'/><br />
+	thal <input type='text' name='thal'/><br />
+	<input type="submit" value="Submit" />
+	</form>
+	<button id='lucky'>I'm feeling lucky</button>	
+
+	<script>
+		$().ready(function(){
+			console.log('wooh')
+			$('#patient').submit(function(){
+				var inputs = $('#patient :input');
+		    	var values = {};
+		    	var path = "predict";
+	    		inputs.each(function() {
+	    			if ($(this).val() === ""){
+	    				path += "/e";
+	    			}else{
+		    			path += "/" + $(this).val();
+		    		}
+    	    		values[this.name] = $(this).val();
+    			});
+    			var json = JSON.stringify(values);
+    			console.log(path)
+    			console.log(json)
+    			console.log(inputs);
+    			console.log(values);
+//    			$.post('calculate/',json,function(data){alert('wooh')});
+
+				return false;
+				
+			});
+
+		});
+	</script>
+</body>
+</html>

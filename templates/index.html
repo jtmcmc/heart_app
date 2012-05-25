@@ -1,0 +1,78 @@
+<html>
+<title>Hey do you have heart cancer?</title>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="static/json2.js"></script>
+<body>
+Submit your vitals to see if you are most likely cancer free or what stage cancer you may have. Feel free to randomly generate some vitals using the 'I'm feeling lucky' button.
+	<div id="result"></div>
+	<form id='patient'>
+	age <input type='text' name='age'/><br />
+	sex <input type='text' name='sex'/><br />
+	cp <input type='text' name='cp'/><br />
+	trestbps <input type='text' name='trestbps'/><br />
+	chol <input type='text' name='chol'/><br />
+	fbs <input type='text' name='fbs'/><br />
+	restecg <input type='text' name='restecg'/><br />
+	thalach <input type='text' name='thalach'/><br />
+	exang <input type='text' name='exang'/><br />
+	oldspeak <input type='text' name='oldpeak'/><br />
+	slope <input type='text' name='slope'/><br />
+	ca <input type='text' name='ca'/><br />
+	thal <input type='text' name='thal'/><br />
+	<input type="submit" value="Submit" />
+	</form>
+	<button id='lucky'>I'm feeling lucky</button>	
+
+	<script>
+
+		
+		$().ready(function(){
+
+			$('#lucky').click(function(){
+				$('input[name="age"]').val(Math.floor((Math.random()*101)));
+				$('input[name="sex"]').val(Math.floor((Math.random()*2)));
+				$('input[name="cp"]').val(Math.floor((Math.random()*4))+1);
+				$('input[name="trestbps"]').val(Math.floor((Math.random()*205)+90));
+				$('input[name="chol"]').val(Math.floor((Math.random()*400)+150));
+				$('input[name="fbs"]').val(Math.floor((Math.random()*2)));
+				$('input[name="restecg"]').val(Math.floor((Math.random()*3)));
+				$('input[name="thalach"]').val(Math.floor((Math.random()*200)+80));
+				$('input[name="exang"]').val(Math.floor((Math.random()*2)))
+				$('input[name="oldpeak"]').val((Math.random()*10));
+				$('input[name="slope"]').val(Math.floor((Math.random()*2))+1)
+				$('input[name="ca"]').val(Math.floor((Math.random()*3)))
+				$('input[name="thal"]').val(Math.floor((Math.random()*6))+1)
+			});
+
+			$('#patient').submit(function(){
+				var inputs = $('#patient :input');
+		    	var values = {};
+		    	var path = "predict";
+	    		inputs.each(function() {
+	    			if ($(this).val() === ""){
+	    				path += "/e";
+	    			}else if($(this).val() !== "Submit"){
+		    			path += "/" + $(this).val();
+		    		}
+    	    		values[this.name] = $(this).val();
+    			});
+
+    			var json = JSON.stringify(values);
+    			$.getJSON('predict',json,function(data){
+    				if (data['predicted'] > 0){
+    					$('#result').text('You may have stage ' + data['predicted'] + " cancer");
+    				}else{
+    					$('#result').text('You probably do not have cancer!');
+    				}
+
+    			});
+
+				return false;
+				
+			});
+
+		});
+	</script>
+</body>
+</html>
