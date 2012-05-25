@@ -61,9 +61,9 @@ Submit your vitals to see if you are most likely cancer free or what stage cance
     			var json = JSON.stringify(values);
     			$.getJSON('predict',json,function(data){
     				if (data['predicted'] > 0){
-    					$('#result').text('You may have stage ' + data['predicted'] + " cancer");
+    					$('#result').text('You may have stage ' + data['predicted'] + " heart disease");
     				}else{
-    					$('#result').text('You probably do not have cancer!');
+    					$('#result').text('You probably do not have heart disease!');
     				}
 
     			});
